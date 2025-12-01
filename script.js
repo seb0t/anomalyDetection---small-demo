@@ -62,7 +62,7 @@ let width, height;
 let particles = [];
 
 // Configuration
-const particleCount = 100; // Increased density
+const particleCount = 180; // Increased density for "many small ones"
 const connectionDistance = 140;
 const mouseDistance = 250;
 
@@ -90,10 +90,22 @@ class Particle {
     constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 1; // Slower, smoother movement
-        this.vy = (Math.random() - 0.5) * 1;
-        this.size = Math.random() * 2 + 1;
-        this.baseColor = `rgba(0, 242, 255, ${Math.random() * 0.4 + 0.1})`; // Cyan accent
+
+        const type = Math.random();
+        if (type > 0.92) {
+            // Large "Bokeh" Particles (8%)
+            this.size = Math.random() * 5 + 3; // Big
+            this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.baseColor = `rgba(0, 242, 255, ${Math.random() * 0.05 + 0.02})`; // Very transparent
+        } else {
+            // Small Particles (92%)
+            this.size = Math.random() * 1.5 + 0.5; // Tiny
+            this.vx = (Math.random() - 0.5) * 1;
+            this.vy = (Math.random() - 0.5) * 1;
+            this.baseColor = `rgba(0, 242, 255, ${Math.random() * 0.4 + 0.1})`;
+        }
+
         this.color = this.baseColor;
     }
 

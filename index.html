@@ -21,23 +21,50 @@
 
         <!-- Slide 1: Title -->
         <div class="slide active">
-            <h1>Rilevamento Anomalie Industriali</h1>
-            <h2>Un approccio basato su Intelligenza Artificiale</h2>
+            <h1>Rilevamento di Anomalie su Immagini Industriali</h1>
+            <h2>Rivisitazione dell'algoritmo PatchCore<br><span style="font-size: 0.6em; opacity: 0.8;">(Roth et al.,
+                    2021)</span></h2>
             <p>Innovazione nel controllo qualità</p>
+            <p class="credits">Studio a cura di <strong>Sebastiano De Gobbi</strong><br>Presentato per <strong>Pagnan
+                    S.r.l.</strong></p>
         </div>
 
         <!-- Slide 2: The Problem -->
         <div class="slide">
-            <h2>Il Problema</h2>
-            <p><strong>Come troviamo i difetti?</strong></p>
-            <ul>
-                <li>Nelle linee di produzione, i difetti sono rari e vari.</li>
-                <li>È difficile programmare un computer per riconoscere <em>ogni possibile</em> difetto.</li>
+            <h2>Il Problema: La Sfida dei Dati</h2>
+            <p><strong>Perché i metodi tradizionali falliscono?</strong></p>
+            <ul style="text-align: left; display: inline-block; max-width: 900px;">
+                <li><strong>Rarità:</strong> I difetti compaiono molto raramente (es. 1 su 10.000 pezzi). Raccogliere
+                    abbastanza esempi di "difetti" per addestrare un'AI classica è quasi impossibile.</li>
+                <li><strong>Varietà Imprevedibile:</strong> Un difetto può essere qualsiasi cosa: un graffio, una
+                    macchia d'olio, un pezzo mancante, una deformazione. Non possiamo prevedere a priori <em>come</em>
+                    si romperà un pezzo.</li>
             </ul>
             <br>
-            <p><strong>L'idea:</strong> Invece di insegnare cosa è "sbagliato", insegniamo cosa è
-                <strong>"giusto"</strong>.</p>
-            <p>Tutto ciò che non è "giusto", è un'anomalia.</p>
+            <p><strong>L'approccio "Unsupervised":</strong> Invece di cacciare l'imprevisto, impariamo a conoscere la
+                perfezione. Se conosciamo perfettamente il "normale", tutto il resto è anomalia.</p>
+        </div>
+
+        <!-- Slide 2.5: Visual Challenge -->
+        <div class="slide">
+            <h2>Sfida Visiva: Trova l'Intruso</h2>
+            <p>Tra questi 10 pezzi, <strong>uno solo</strong> è difettoso. Riesci a vederlo?</p>
+
+            <div class="challenge-grid">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/bad.png" alt="Anomaly" class="anomaly-img">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+                <img src="images/challenge/good.png" alt="Good">
+            </div>
+
+            <p style="margin-top: 1rem; font-size: 1.2rem; opacity: 0.9;"><em>L'occhio umano si stanca. L'AI no.</em>
+            </p>
         </div>
 
         <!-- Slide 3: The Solution -->
@@ -52,6 +79,31 @@
             </ul>
         </div>
 
+        <!-- Slide 3.5: Synthetic Data -->
+        <div class="slide">
+            <h2>Generazione Dati Sintetici</h2>
+            <p>Per questa dimostrazione, abbiamo utilizzato il modello multimodale <strong>NanoBanana</strong> per
+                generare campioni realistici.</p>
+
+            <div class="synthetic-grid">
+                <div class="synthetic-item">
+                    <img src="images/4/input.png" alt="Sample 1">
+                    <span>Campione A</span>
+                </div>
+                <div class="synthetic-item">
+                    <img src="images/5/input.png" alt="Sample 2">
+                    <span>Campione B</span>
+                </div>
+                <div class="synthetic-item">
+                    <img src="images/6/input.png" alt="Sample 3">
+                    <span>Campione C</span>
+                </div>
+            </div>
+
+            <p style="font-size: 1rem; opacity: 0.8; margin-top: 1rem;">Il modello simula difetti complessi mantenendo
+                la coerenza strutturale del pezzo.</p>
+        </div>
+
         <!-- Slide 4: How it Works 1 -->
         <div class="slide">
             <h2>Come Funziona: 1. Visione</h2>
@@ -62,14 +114,15 @@
 
         <!-- Slide 5: How it Works 2 -->
         <div class="slide">
-            <h2>Come Funziona: 2. La Mappa di Calore</h2>
-            <p>L'algoritmo crea una <strong>Heatmap</strong>.</p>
-            <ul style="display: inline-block; text-align: left;">
-                <li><span style="color: #a0a0ff;">Blu/Viola</span>: Tutto normale.</li>
-                <li><span style="color: #ff4040;">Giallo/Rosso</span>: Alta probabilità di difetto.</li>
+            <h2>2. L'Anomaly Map</h2>
+            <p style="margin-bottom: 0.5rem;">Mappa di segmentazione basata sulla distanza nello spazio latente.</p>
+            <ul style="display: inline-block; text-align: left; font-size: 1.2rem; margin-bottom: 0.5rem;">
+                <li><span style="color: #888;">Nero/Viola</span>: Conforme (Basso score)</li>
+                <li><span style="color: #ff4040;">Rosso</span>: Incerto (Medio score)</li>
+                <li><span style="color: #fff; text-shadow: 0 0 5px #fff;">Bianco</span>: <strong>Anomalia</strong> (Alto
+                    score)</li>
             </ul>
-            <br>
-            <img src="images/4/hm.png" alt="Heatmap">
+            <img src="images/4/hm.png" alt="Anomaly Map" style="max-height: 40vh; margin-top: 0.5rem;">
         </div>
 
         <!-- Slide 6: Result 1 -->
@@ -122,14 +175,18 @@
 
         <!-- Slide 9: Conclusion -->
         <div class="slide">
-            <h2>Conclusione</h2>
-            <ul style="font-size: 1.8rem; line-height: 2;">
-                <li>🚀 <strong>Veloce</strong>: Analisi in tempo reale.</li>
-                <li>🧠 <strong>Flessibile</strong>: Impara solo dai prodotti "buoni".</li>
-                <li>🎯 <strong>Preciso</strong>: Localizza il difetto al pixel.</li>
+            <h2>Conclusioni e Sviluppi Futuri</h2>
+            <ul style="font-size: 1.3rem; line-height: 1.8; text-align: left; max-width: 900px;">
+                <li>🧠 <strong>Backbone CNN</strong>: Attualmente usiamo una rete non allenata specificamente. Un
+                    fine-tuning sul dominio industriale aumenterebbe drasticamente le performance.</li>
+                <li>📊 <strong>Dataset</strong>: Questo PoC usa solo 7 immagini "good". In produzione, scalando a
+                    migliaia di campioni, la robustezza del modello sarà totale.</li>
+                <li>⚡ <strong>Hardware</strong>: Le risorse di calcolo sono cruciali. Con GPU dedicate possiamo
+                    abbattere la latenza (<10ms) e aumentare la risoluzione di analisi.</li>
             </ul>
             <br>
-            <p>Controllo qualità automatico e affidabile.</p>
+            <p style="font-size: 1.5rem; color: var(--accent-color); font-weight: bold;">Il potenziale di miglioramento
+                è enorme.</p>
         </div>
 
     </div>
