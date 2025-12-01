@@ -20,8 +20,8 @@ function showSlide(index) {
     // Update button states
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === slides.length - 1;
-    prevBtn.style.opacity = index === 0 ? '0.5' : '1';
-    nextBtn.style.opacity = index === slides.length - 1 ? '0.5' : '1';
+    prevBtn.style.opacity = index === 0 ? '0.3' : '1';
+    nextBtn.style.opacity = index === slides.length - 1 ? '0.3' : '1';
 }
 
 function nextSlide() {
@@ -62,9 +62,22 @@ let width, height;
 let particles = [];
 
 // Configuration
-const particleCount = 60;
-const connectionDistance = 150;
-const mouseDistance = 200;
+const particleCount = 100; // Increased density
+const connectionDistance = 140;
+const mouseDistance = 250;
+
+// Mouse tracking
+let mouse = { x: null, y: null };
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+});
+
+window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+});
 
 function resize() {
     width = window.innerWidth;
@@ -77,10 +90,11 @@ class Particle {
     constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = (Math.random() - 0.5) * 1.5;
+        this.vx = (Math.random() - 0.5) * 1; // Slower, smoother movement
+        this.vy = (Math.random() - 0.5) * 1;
         this.size = Math.random() * 2 + 1;
-        this.color = `rgba(0, 210, 255, ${Math.random() * 0.5 + 0.2})`; // Cyan accent
+        this.baseColor = `rgba(0, 242, 255, ${Math.random() * 0.4 + 0.1})`; // Cyan accent
+        this.color = this.baseColor;
     }
 
     update() {
@@ -90,6 +104,24 @@ class Particle {
         // Bounce off edges
         if (this.x < 0 || this.x > width) this.vx *= -1;
         if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Mouse interaction
+        if (mouse.x != null) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < mouseDistance) {
+                const forceDirectionX = dx / distance;
+                const forceDirectionY = dy / distance;
+                const force = (mouseDistance - distance) / mouseDistance;
+                const directionX = forceDirectionX * force * 3; // Repel strength
+                const directionY = forceDirectionY * force * 3;
+
+                this.x -= directionX;
+                this.y -= directionY;
+            }
+        }
     }
 
     draw() {
@@ -125,7 +157,8 @@ function animate() {
 
             if (distance < connectionDistance) {
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(0, 210, 255, ${1 - distance / connectionDistance})`;
+                let opacity = 1 - distance / connectionDistance;
+                ctx.strokeStyle = `rgba(0, 242, 255, ${opacity * 0.2})`; // Fainter lines
                 ctx.lineWidth = 1;
                 ctx.moveTo(particles[i].x, particles[i].y);
                 ctx.lineTo(particles[j].x, particles[j].y);
