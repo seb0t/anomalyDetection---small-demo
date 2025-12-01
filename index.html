@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rilevamento Anomalie Industriali - AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Canvas for Animation -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Main Slide Container -->
+    <div class="slides-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Rilevamento Anomalie Industriali</h1>
+            <h2>Un approccio basato su Intelligenza Artificiale</h2>
+            <p>Innovazione nel controllo qualità</p>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide">
+            <h2>Il Problema</h2>
+            <p><strong>Come troviamo i difetti?</strong></p>
+            <ul>
+                <li>Nelle linee di produzione, i difetti sono rari e vari.</li>
+                <li>È difficile programmare un computer per riconoscere <em>ogni possibile</em> difetto.</li>
+            </ul>
+            <br>
+            <p><strong>L'idea:</strong> Invece di insegnare cosa è "sbagliato", insegniamo cosa è
+                <strong>"giusto"</strong>.</p>
+            <p>Tutto ciò che non è "giusto", è un'anomalia.</p>
+        </div>
+
+        <!-- Slide 3: The Solution -->
+        <div class="slide">
+            <h2>La Soluzione: PatchCore</h2>
+            <p>L'algoritmo <strong>PatchCore</strong> funziona come un operaio esperto.</p>
+            <ul style="text-align: left; display: inline-block;">
+                <li><strong>1. Osserva:</strong> Guarda l'immagine pezzetto per pezzetto.</li>
+                <li><strong>2. Ricorda:</strong> Ha memoria dei pezzi perfetti.</li>
+                <li><strong>3. Confronta:</strong> Nota se un pezzo è nuovo/diverso.</li>
+                <li><strong>4. Segnala:</strong> Identifica l'anomalia.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: How it Works 1 -->
+        <div class="slide">
+            <h2>Come Funziona: 1. Visione</h2>
+            <p>Una <strong>Rete Neurale</strong> scompone l'immagine in caratteristiche (features).</p>
+            <img src="images/4/analysis.png" alt="Analisi Features">
+            <p style="font-size: 1rem; opacity: 0.8;">*L'immagine viene "smontata" in diversi livelli di dettaglio.*</p>
+        </div>
+
+        <!-- Slide 5: How it Works 2 -->
+        <div class="slide">
+            <h2>Come Funziona: 2. La Mappa di Calore</h2>
+            <p>L'algoritmo crea una <strong>Heatmap</strong>.</p>
+            <ul style="display: inline-block; text-align: left;">
+                <li><span style="color: #a0a0ff;">Blu/Viola</span>: Tutto normale.</li>
+                <li><span style="color: #ff4040;">Giallo/Rosso</span>: Alta probabilità di difetto.</li>
+            </ul>
+            <br>
+            <img src="images/4/hm.png" alt="Heatmap">
+        </div>
+
+        <!-- Slide 6: Result 1 -->
+        <div class="slide">
+            <h2>Risultati: Esempio 1</h2>
+            <div class="comparison-table">
+                <div class="comparison-item">
+                    <span>Input</span>
+                    <img src="images/4/input.png" alt="Input">
+                </div>
+                <div class="comparison-item">
+                    <span>Output (Sovrapposizione)</span>
+                    <img src="images/4/output.png" alt="Output">
+                </div>
+            </div>
+            <p style="margin-top: 1rem;">L'algoritmo evidenzia con precisione l'area anomala.</p>
+        </div>
+
+        <!-- Slide 7: Result 2 -->
+        <div class="slide">
+            <h2>Risultati: Esempio 2</h2>
+            <div class="comparison-table">
+                <div class="comparison-item">
+                    <span>Input</span>
+                    <img src="images/5/input.png" alt="Input">
+                </div>
+                <div class="comparison-item">
+                    <span>Output (Sovrapposizione)</span>
+                    <img src="images/5/output.png" alt="Output">
+                </div>
+            </div>
+            <p style="margin-top: 1rem;">Un altro test con un difetto diverso.</p>
+        </div>
+
+        <!-- Slide 8: Result 3 -->
+        <div class="slide">
+            <h2>Risultati: Esempio 3</h2>
+            <div class="comparison-table">
+                <div class="comparison-item">
+                    <span>Input</span>
+                    <img src="images/6/input.png" alt="Input">
+                </div>
+                <div class="comparison-item">
+                    <span>Output (Sovrapposizione)</span>
+                    <img src="images/6/output.png" alt="Output">
+                </div>
+            </div>
+            <p style="margin-top: 1rem;">Il sistema è robusto su diverse tipologie di difetti.</p>
+        </div>
+
+        <!-- Slide 9: Conclusion -->
+        <div class="slide">
+            <h2>Conclusione</h2>
+            <ul style="font-size: 1.8rem; line-height: 2;">
+                <li>🚀 <strong>Veloce</strong>: Analisi in tempo reale.</li>
+                <li>🧠 <strong>Flessibile</strong>: Impara solo dai prodotti "buoni".</li>
+                <li>🎯 <strong>Preciso</strong>: Localizza il difetto al pixel.</li>
+            </ul>
+            <br>
+            <p>Controllo qualità automatico e affidabile.</p>
+        </div>
+
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="btn" id="prevBtn">Indietro</button>
+        <button class="btn" id="nextBtn">Avanti</button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progress"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
